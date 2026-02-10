@@ -3,7 +3,7 @@
 
 <suite name="Single Testing Suite">
     <listeners>
-        <listener class-name="ListenerTest" />
+        <listener class-name="utils.ListenerTest" />
     </listeners>
     <test name="alert-tests">
         <classes>

@@ -17,7 +17,7 @@
         <selenium.version>4.39.0</selenium.version>
         <testng.version>7.11.0</testng.version>
         <version.surefire>3.5.4</version.surefire>
-        <version.log4j>2.24.3</version.log4j>
+        <version.log4j>2.25.3</version.log4j>
         <version.dotenv>3.2.0</version.dotenv>
         <version.monte>0.7.7.0</version.monte>
         <version.aspectj>1.9.20.1</version.aspectj>
@@ -101,9 +101,6 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${version.aspectj}/aspectjweaver-${version.aspectj}.jar"
                     </argLine>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng-executer/testng_single.xml</suiteXmlFile>
-                    </suiteXmlFiles>
                 </configuration>
                 <dependencies>
                     <dependency>

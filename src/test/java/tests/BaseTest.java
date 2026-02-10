@@ -33,7 +33,7 @@ public class BaseTest extends Helper {
         logger.info("[Setup] Browser: {}", TestSettings.BROWSER_TYPE);
         logger.info("========================================");
         
-        driverManager = new DriverManager();
+        driverManager = new DriverManager("chrome");
         basePage = new BasePage();
         basePage.navigateTo(TestSettings.BASE_URL);
     }

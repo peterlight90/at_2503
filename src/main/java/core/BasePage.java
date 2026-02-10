@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utils.Helper;
 
-public class BasePage extends Helper {
+public abstract class BasePage extends Helper {
     WebDriver driver;
 
 
@@ -184,6 +184,8 @@ public class BasePage extends Helper {
      */
     protected Alert switchToAlert() {
         logger.info("[Base Page] Switching to alert");
+        // Wait for the alert to be present`
+        getWait(TestSettings.WAIT_ELEMENT).until(ExpectedConditions.alertIsPresent());
         return this.driver.switchTo().alert();
     }
 

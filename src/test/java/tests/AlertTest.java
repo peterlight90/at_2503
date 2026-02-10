@@ -10,9 +10,9 @@ public class AlertTest extends BaseTest {
     AlertPage alertPage;
 
     @Test
-    public void alertWithOKCancel() {
+    public void tc01Abc() {
         /**
-        * Test Case: Verify Alert with OK & Cancel functionality
+        * Test Case 01: Verify Alert with OK & Cancel functionality
         */
       alertPage = new AlertPage();
 
@@ -29,7 +29,8 @@ public class AlertTest extends BaseTest {
       alertPage.dismissAlert();
 
       logStep("VP. Verify the alert was dismissed successfully");
-      verifyEquals(alertPage.getAlertDismissedMessage(), "You Pressed Cancel - FAILED", "Alert dismissed message is incorrect");
+      verifyEquals(alertPage.getAlertDismissedMessage(), "You Pressed Cancel", "Alert dismissed message is incorrect");
     }
-    
+
+
 }

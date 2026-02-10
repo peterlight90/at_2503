@@ -12,6 +12,9 @@ class AlertPageSelector {
 }
 
 public class AlertPage extends BasePage {
+
+    AlertPageSelector selector = new AlertPageSelector();
+
     public void acceptAlert() {
         logger.info("[Alert Page]: Accepting alert");
         Alert alert = switchToAlert();

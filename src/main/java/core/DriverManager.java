@@ -31,6 +31,8 @@ public class DriverManager extends Helper {
     /**
      * Parameterized constructor - allows custom browser type
      * @param browserType Browser to initialize (chrome, firefox, edge)
+     * Constructor
+     * gọi khi khởi tạo đối tượng DriverManager với kiểu trình duyệt cụ thể
      */
     public DriverManager(String browserType) {
         super();
