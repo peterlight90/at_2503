@@ -37,7 +37,7 @@ public class ATTestingTest extends BaseTest {
          logger.info("Step 2: Accept the alert box");
          alertPage.acceptAlert();
      }
-
+     
      @Test
      @Tag("automationtesting")
      public void alertWithOKCancel() {

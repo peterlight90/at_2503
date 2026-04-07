@@ -3,7 +3,9 @@ package core;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONObject;
 import utils.Helper;
-import static utils.Constants.*;
+
+import static automationtesting.Constants.*;
+
 import java.util.Objects;
 
 /**

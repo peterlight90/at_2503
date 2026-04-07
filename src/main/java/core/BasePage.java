@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import utils.Helper;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All page classes should extend this class to inherit WebDriver access and utility methods.
  */
 public class BasePage extends Helper {
-    private String crrWindow;
+    private String originalWindow;
     protected WebDriver driver;
     public BasePage(){
         driver = DriverManager.getDriver();
@@ -50,6 +51,10 @@ public class BasePage extends Helper {
         getWait(TestSettings.WAIT_ELEMENT).until(ExpectedConditions.invisibilityOfElementLocated(selector));
     }
 
+    protected List<WebElement> waitForElementsVisible(By selector) {
+        return getWait(TestSettings.WAIT_ELEMENT).until(ExpectedConditions.visibilityOfAllElements(driver.findElements(selector)));
+    }
+    
     private WebElement waitForElementClickable(By selector) {
         return getWait(TestSettings.WAIT_ELEMENT).until(ExpectedConditions.elementToBeClickable(selector));
     }
@@ -132,14 +137,17 @@ public class BasePage extends Helper {
         logger.info("Dragging element from {} to {}", sourceEleBy, targetEleBy);
         WebElement sourceElement = findElement(sourceEleBy);
         WebElement targetElement = findElement(targetEleBy);
+        targetElement.getLocation();
 
         // Init action object
         Actions actions = new Actions(this.driver);
 
         // Perform drag and drop action
         actions.dragAndDrop(sourceElement, targetElement).perform();
+        actions.moveToElement(sourceElement).clickAndHold().moveByOffset(0, 0).release().perform();
+        actions.dragAndDropBy(sourceElement, 0, 0).pause(2000).perform();
     }
-
+    // ALERT METHODS
     protected Alert switchToAlert() {
         logger.info("Switching to alert");
         return this.driver.switchTo().alert();
@@ -147,25 +155,53 @@ public class BasePage extends Helper {
 
     protected void acceptAlertAction(Alert alert) {
         logger.info("Accepting alert");
-        alert.accept();
+        alert.accept(); // Click the "OK" button on the alert
     }
+
     protected void dismissAlertAction(Alert alert) {
         logger.info("Dismissing alert");
         alert.dismiss();
     }
 
+    protected void enterAlertText(Alert alert, String text) {
+        logger.info("Entering text '{}' into alert", text);
+        alert.sendKeys(text);
+    }
+
     protected WebDriver swithToNewWindow(){
         logger.info("Switching to new window");
-        this.crrWindow = this.driver.getWindowHandle();
-        logger.info("Current window: {}", this.crrWindow);
+        this.originalWindow = this.driver.getWindowHandle();
+        logger.info("Current window: {}", this.originalWindow);
         for (String windowHandle : this.driver.getWindowHandles()) {
-            if (!windowHandle.equals(this.crrWindow)) {
+            if (!windowHandle.equals(this.originalWindow)) {
                 this.driver.switchTo().window(windowHandle);
                 logger.info("Switched to new window: {}", windowHandle);
                 return this.driver;
             }
         }
         logger.warn("No new window found to switch to");
+        return this.driver;
+    }
+    
+    protected void switchToIframe(By selector) {
+        logger.info("Switching to iframe {}", selector);
+        WebElement iframeElement = findElement(selector);
+        this.driver.switchTo().defaultContent(); // Switch back to the main content before switching to the iframe
+        this.driver.switchTo().frame(iframeElement);
+    }
+
+    protected WebDriver switchWindowByTitle(String title) {
+        logger.info("Switching to window with title: {}", title);
+        String originalWindow = this.driver.getWindowHandle();
+        for (String windowHandle : this.driver.getWindowHandles()) {
+            this.driver.switchTo().window(windowHandle);
+            if (this.driver.getTitle().equals(title)) {
+                logger.info("Switched to window with title: {}", title);
+                return this.driver;
+            }
+        }
+        logger.warn("No window with title '{}' found. Switching back to original window.", title);
+        this.driver.switchTo().window(originalWindow);
         return this.driver;
     }
 
@@ -175,17 +211,17 @@ public class BasePage extends Helper {
         verifyEquals(expectedTitle, actualTitle, String.format("Expected title '%s' but found '%s'", expectedTitle, actualTitle));
     }
 
-    public void switchBackToOriginalWindow() {
-        logger.info("Switching back to original window: {}", this.crrWindow);
+    public void switchBackToOriginalWindowAndCloseOtherWindows() {
+        logger.info("Switching back to original window: {}", this.originalWindow);
         Set<String> arrString = this.driver.getWindowHandles();
         for (String windowHandle : arrString) {
-            if (!windowHandle.equals(this.crrWindow)) {
+            if (!windowHandle.equals(this.originalWindow)) {
                 this.driver.switchTo().window(windowHandle);
                 logger.info("Switched to new window: {}", windowHandle);
                 this.driver.close();
             }
         }
-        this.driver.switchTo().window(this.crrWindow);
+        this.driver.switchTo().window(this.originalWindow);
     }
 }
 

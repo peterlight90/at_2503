@@ -2,8 +2,8 @@ package pages.guru;
 
 import org.openqa.selenium.By;
 
+import automationtesting.Constants;
 import core.BasePage;
-import utils.Constants;
 
 
 class DragDropSelector {

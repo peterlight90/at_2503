@@ -4,14 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
+import static automationtesting.Constants.DOWNLOAD_FOLDER_PATH;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-
-import static utils.Constants.DOWNLOAD_FOLDER_PATH;
 
 public class Helper {
     protected final static Logger logger = LogManager.getLogger("at_2503");

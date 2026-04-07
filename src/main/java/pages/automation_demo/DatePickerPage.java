@@ -1,8 +1,10 @@
 package pages.automation_demo;
 import org.openqa.selenium.By;
 import core.BasePage;
+
+import static automationtesting.Constants.AUTOMATION_DEMO_DATE_PICKER_URL;
+
 import java.time.LocalDate;
-import static utils.Constants.AUTOMATION_DEMO_DATE_PICKER_URL;
 
 class DatePickerPageSelector {
     // Disabled Date Picker Textbox

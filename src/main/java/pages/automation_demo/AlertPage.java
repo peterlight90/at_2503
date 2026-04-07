@@ -3,10 +3,10 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import core.BasePage;
 
-import java.nio.file.Paths;
+import static automationtesting.Constants.AUTOMATION_DEMO_ALERTS_URL;
+import static automationtesting.Constants.DOWNLOAD_FOLDER_PATH;
 
-import static utils.Constants.AUTOMATION_DEMO_ALERTS_URL;
-import static utils.Constants.DOWNLOAD_FOLDER_PATH;
+import java.nio.file.Paths;
 
 class AlertPageSelector {
     public static final By btnAlertWithOK = By.id("OKTab");
